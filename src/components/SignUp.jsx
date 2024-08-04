@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import {
   Container,
   TextField,
@@ -8,6 +9,7 @@ import {
   Box,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import "./SignUp.css";
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
@@ -15,31 +17,37 @@ const SignUpForm = () => {
     password: "",
     email: "",
     role: "",
-    name: "",
-    bio: "",
-    contact: "",
   });
+
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission, e.g., send data to server
-    console.log("Form submitted:", formData);
+    try {
+      const response = await axios.post("/api/signup", formData);
+      setSuccess("User registered successfully!");
+      setError("");
+    } catch (err) {
+      setError(err.response.data.message || "An error occurred");
+      setSuccess("");
+    }
   };
 
   return (
     <Container maxWidth="sm">
       <Box mt={5}>
         <Typography
-          variant="h4"
-          component="h2"
+          variant="h5"
+          component="h1"
           gutterBottom
           style={{ textAlign: "center" }}
         >
-          Optimize Your Career Journey
+          Optimize Your Career Journey With CareerHub
         </Typography>
         <form onSubmit={handleSubmit}>
           <TextField
@@ -50,6 +58,7 @@ const SignUpForm = () => {
             fullWidth
             margin="normal"
             required
+            autoFocus
           />
           <TextField
             label="Password"
@@ -84,39 +93,29 @@ const SignUpForm = () => {
             <MenuItem value="employer">Employer</MenuItem>
             <MenuItem value="job_seeker">Job Seeker</MenuItem>
           </TextField>
-          <TextField
-            label="Name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
             fullWidth
-            margin="normal"
-            required
-          />
-          <TextField
-            label="Bio"
-            name="bio"
-            value={formData.bio}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            multiline
-            rows={4}
-          />
-          <TextField
-            label="Contact"
-            name="contact"
-            value={formData.contact}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            style={{ marginBottom: "1.5rem" }}
-          />
-          <Button type="submit" variant="contained" color="primary" fullWidth>
+            sx={{ mt: 2, mb: 2 }}
+          >
             Sign Up
           </Button>
         </form>
-        <Link to="/login">Already on LinkedIn? Sign in</Link>
+        {error && (
+          <Typography color="error" align="center" mt={2}>
+            {error}
+          </Typography>
+        )}
+        {success && (
+          <Typography color="primary" align="center" mt={2}>
+            {success}
+          </Typography>
+        )}
+        <div className="redirect-link">
+          Already on CareerHub? <Link to="/login">Sign in</Link>
+        </div>
       </Box>
     </Container>
   );

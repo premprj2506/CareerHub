@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Container, Box, TextField, Button, Typography } from "@mui/material";
+import "./Login.css";
 import { Link } from "react-router-dom";
 
 const Login = () => {
@@ -24,7 +25,7 @@ const Login = () => {
         }}
       >
         <Typography component="h1" variant="h5">
-          Login
+          Login to CareerHub
         </Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
           <TextField
@@ -51,15 +52,22 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <div>
+            <Link to="" className="f-link">
+              Forgot Password?
+            </Link>
+          </div>
           <Button
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: 2, mb: 2 }}
           >
             Login
           </Button>
-          <Link to="/signup">Do'nt Have account? Sign up</Link>
+          <div className="redirect-link">
+            Don't have account? <Link to="/signup">Sign up</Link>
+          </div>
         </Box>
       </Box>
     </Container>
