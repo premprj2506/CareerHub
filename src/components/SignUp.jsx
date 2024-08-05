@@ -29,7 +29,7 @@ const SignUpForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/api/signup", formData);
+      const response = await axios.post("/api/users/signup", formData);
       setSuccess("User registered successfully!");
       setError("");
     } catch (err) {

@@ -1,17 +1,32 @@
 import { useState } from "react";
 import { Container, Box, TextField, Button, Typography } from "@mui/material";
-import "./Login.css";
+import axios from "axios";
 import { Link } from "react-router-dom";
+import "./Login.css";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Handle form submission (e.g., call an API)
-    console.log("Email:", email);
-    console.log("Password:", password);
+    try {
+      const response = await axios.post("/api/users/login", formData);
+      setSuccess("Logged in successfully!");
+      setError("");
+      // Handle success logic (e.g., redirect, save token)
+    } catch (err) {
+      setError(err.response?.data?.message || "An error occurred");
+      setSuccess("");
+    }
   };
 
   return (
@@ -37,8 +52,8 @@ const Login = () => {
             name="email"
             autoComplete="email"
             autoFocus
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={formData.email}
+            onChange={handleChange}
           />
           <TextField
             margin="normal"
@@ -49,8 +64,8 @@ const Login = () => {
             type="password"
             id="password"
             autoComplete="current-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={formData.password}
+            onChange={handleChange}
           />
           <div>
             <Link to="" className="f-link">
@@ -65,8 +80,18 @@ const Login = () => {
           >
             Login
           </Button>
+          {error && (
+            <Typography color="error" align="center" mt={2}>
+              {error}
+            </Typography>
+          )}
+          {success && (
+            <Typography color="primary" align="center" mt={2}>
+              {success}
+            </Typography>
+          )}
           <div className="redirect-link">
-            Don't have account? <Link to="/signup">Sign up</Link>
+            Don't have an account? <Link to="/signup">Sign up</Link>
           </div>
         </Box>
       </Box>
