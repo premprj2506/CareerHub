@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   TextField,
@@ -30,6 +31,7 @@ const SignUpForm = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const navigate = useNavigate(); // Get the navigate function
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
