@@ -11,7 +11,6 @@ exports.signup = async (req, res) => {
   try {
     const newUser = new User({
       username,
-      password,
       email,
       role,
       profile: {
@@ -22,8 +21,13 @@ exports.signup = async (req, res) => {
       },
     });
 
-    const savedUser = await newUser.save();
-    res.status(201).json(savedUser);
+    let registeredUser = await User.register(newUser, password);
+    req.login(registeredUser, (error) => {
+      if (error) {
+        return next(error);
+      }
+      res.status(201).json(newUser);
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
@@ -32,10 +36,20 @@ exports.signup = async (req, res) => {
 
 exports.login = (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
-    if (err) return next(err);
-    if (!user) return res.status(400).json({ message: info.message });
+    if (err) {
+      console.error("Authentication error:", err);
+      return next(err);
+    }
+    if (!user) {
+      console.warn("Authentication failed:", info.message);
+      return res.status(400).json({ message: info.message });
+    }
     req.logIn(user, (err) => {
-      if (err) return next(err);
+      if (err) {
+        console.error("Login error:", err);
+        return next(err);
+      }
+      console.log("User logged in successfully:", user);
       return res.status(200).json(user);
     });
   })(req, res, next);

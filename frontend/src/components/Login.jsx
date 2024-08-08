@@ -19,7 +19,10 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("/api/users/login", formData);
+      const response = await axios.post("/api/users/login", {
+        email: formData.email,
+        password: formData.password,
+      });
       setSuccess("Logged in successfully!");
       setError("");
       // Handle success logic (e.g., redirect, save token)

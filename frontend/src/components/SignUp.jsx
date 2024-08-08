@@ -12,28 +12,39 @@ import { Link } from "react-router-dom";
 import "./SignUp.css";
 
 const SignUpForm = () => {
+  // State to hold form data
   const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-    email: "",
-    role: "",
+    username: "", // username input field
+    password: "", // password input field
+    email: "", // email input field
+    role: "", // role input field (e.g., employer or job_seeker)
   });
 
+  // State to hold error messages
   const [error, setError] = useState("");
+  // State to hold success messages
   const [success, setSuccess] = useState("");
 
+  // Function to handle input changes and update formData state
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Send a POST request to the signup endpoint with formData
       const response = await axios.post("/api/users/signup", formData);
+      console.log(response);
+      // Set success message on successful registration
       setSuccess("User registered successfully!");
+      // Clear error message
       setError("");
     } catch (err) {
+      // Set error message if registration fails
       setError(err.response.data.message || "An error occurred");
+      // Clear success message
       setSuccess("");
     }
   };

@@ -3,8 +3,9 @@ const { Schema } = mongoose;
 const passportLocalMongoose = require("passport-local-mongoose");
 
 const userSchema = new Schema({
-  username: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
+  // Passport-Local Mongoose will add a username, hash and salt field to store the username, the hashed password and the salt value.
+  // username: { type: String, required: true, unique: true },
+  // password: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   role: { type: String, enum: ["employer", "job_seeker"], required: true },
   profile: {

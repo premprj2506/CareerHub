@@ -30,7 +30,7 @@ async function main() {
 // Express session
 app.use(
   session({
-    secret: process.env.SECRET, // Use environment variable for secret
+    secret: "fhdfebhjvcisvcihber", // Use environment variable for secret
     resave: false,
     saveUninitialized: false,
   })
