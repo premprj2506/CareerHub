@@ -17,6 +17,10 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import HomeIcon from "@mui/icons-material/Home";
 import PeopleIcon from "@mui/icons-material/People";
 import WorkIcon from "@mui/icons-material/Work";
+import ImageLogo from "../assets/logo.jpeg";
+
+import Avatar from "@mui/material/Avatar";
+import { deepOrange } from "@mui/material/colors";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -182,7 +186,7 @@ export default function Header() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ backgroundColor: "#063970" }}>
+      <AppBar position="static" sx={{ backgroundColor: "#0a66c2" }}>
         <Toolbar>
           <IconButton
             size="large"
@@ -241,15 +245,6 @@ export default function Header() {
             </IconButton>
             <IconButton
               size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
               edge="end"
               aria-label="account of current user"
               aria-controls={menuId}
@@ -257,7 +252,15 @@ export default function Header() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle />
+              <Avatar
+                sx={{
+                  bgcolor: deepOrange[500],
+                  height: "2.1rem",
+                  width: "2.1rem",
+                }}
+                alt="Travis Howard"
+                src={ImageLogo}
+              />
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
