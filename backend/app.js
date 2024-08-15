@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const passport = require("./config/passport");
 const userRoutes = require("./routes/userRoutes");
+const jobRoutes = require("./routes/jobRouter");
 require("dotenv").config(); // Ensure environment variables are loaded
 
 const app = express();
@@ -42,6 +43,7 @@ app.use(passport.session());
 
 // Routes
 app.use("/api/users", userRoutes);
+app.use("/api/jobs", jobRoutes);
 
 app.get("/", (req, res) => {
   res.send("<h1>Hello World!</h1>");
