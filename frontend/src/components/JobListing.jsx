@@ -1,6 +1,13 @@
-import { Card, CardContent, Typography, Button, Grid } from "@mui/material";
+import { Card, CardContent, Typography, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-const JobListing = ({ job, onViewDetails }) => {
+const JobListing = ({ job }) => {
+  const navigate = useNavigate();
+
+  const handleViewDetails = () => {
+    navigate(`/jobs/${job._id}`); // Navigate to the specific job details page
+  };
+
   return (
     <Card sx={{ marginBottom: 2 }}>
       <CardContent>
@@ -16,7 +23,7 @@ const JobListing = ({ job, onViewDetails }) => {
           variant="contained"
           color="primary"
           sx={{ marginTop: 1 }}
-          onClick={() => onViewDetails(job)}
+          onClick={handleViewDetails}
         >
           View Details
         </Button>

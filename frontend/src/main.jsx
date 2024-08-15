@@ -1,12 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import Login from "./components/Login";
-import SignUpForm from "./components/SignUp";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
+import Login from "./components/Login";
+import SignUpForm from "./components/SignUp";
 import Header from "./components/Header";
 import JobBoard from "./components/JobBoard";
 import HeroSection from "./components/HeroSection";
+import JobDetails from "./components/JobDetails";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,15 @@ const router = createBrowserRouter([
         <Header />
         <HeroSection />
         <JobBoard />
+      </>
+    ),
+  },
+  {
+    path: "/jobs/:jobId",
+    element: (
+      <>
+        <Header />
+        <JobDetails />
       </>
     ),
   },

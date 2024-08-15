@@ -3,7 +3,8 @@ import { Box, Typography, Button, Container, Stack } from "@mui/material";
 import { styled } from "@mui/system";
 
 const HeroContainer = styled(Box)(({ theme }) => ({
-  backgroundImage: 'url("https://source.unsplash.com/1600x900/?office,job")',
+  backgroundImage:
+    'url("https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")',
   backgroundSize: "cover",
   backgroundPosition: "center",
   minHeight: "80vh",
@@ -12,9 +13,11 @@ const HeroContainer = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   color: "#fff",
   textAlign: "center",
-  [theme.breakpoints.down("md")]: {
-    padding: theme.spacing(3),
-  },
+  padding: theme.spacing(8, 2),
+  marginTop: theme.spacing(8),
+  position: "relative",
+  width: "100%", // Ensure full width
+  backgroundRepeat: "no-repeat", // Prevent image from repeating
 }));
 
 const Overlay = styled(Box)(({ theme }) => ({

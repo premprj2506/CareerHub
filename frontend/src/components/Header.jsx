@@ -17,8 +17,6 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import HomeIcon from "@mui/icons-material/Home";
 import PeopleIcon from "@mui/icons-material/People";
 import WorkIcon from "@mui/icons-material/Work";
-import ImageLogo from "../assets/logo.jpeg";
-
 import Avatar from "@mui/material/Avatar";
 import { deepOrange } from "@mui/material/colors";
 
@@ -30,12 +28,8 @@ const Search = styled("div")(({ theme }) => ({
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
   marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
-  },
+  marginLeft: theme.spacing(3),
+  width: "auto",
 }));
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
@@ -52,7 +46,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     width: "100%",
@@ -126,7 +119,7 @@ export default function Header() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size="small" aria-label="show 4 new mails" color="inherit">
+        <IconButton size="small" color="inherit">
           <Badge color="error">
             <HomeIcon />
           </Badge>
@@ -134,11 +127,7 @@ export default function Header() {
         <p>Home</p>
       </MenuItem>
       <MenuItem>
-        <IconButton
-          size="small"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
+        <IconButton size="small" color="inherit">
           <Badge badgeContent={17} color="error">
             <PeopleIcon />
           </Badge>
@@ -146,11 +135,7 @@ export default function Header() {
         <p>My Network</p>
       </MenuItem>
       <MenuItem>
-        <IconButton
-          size="small"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
+        <IconButton size="small" color="inherit">
           <Badge badgeContent={17} color="error">
             <WorkIcon />
           </Badge>
@@ -158,11 +143,7 @@ export default function Header() {
         <p>Jobs</p>
       </MenuItem>
       <MenuItem>
-        <IconButton
-          size="small"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
+        <IconButton size="small" color="inherit">
           <Badge badgeContent={17} color="error">
             <NotificationsIcon />
           </Badge>
@@ -170,13 +151,7 @@ export default function Header() {
         <p>Notification</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="small"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
+        <IconButton size="small" color="inherit">
           <AccountCircle />
         </IconButton>
         <p>Profile</p>
@@ -185,24 +160,13 @@ export default function Header() {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ backgroundColor: "#0a66c2" }}>
+    <Box sx={{ flexGrow: 1, position: "relative", zIndex: 1200 }}>
+      <AppBar position="fixed" sx={{ backgroundColor: "#0a66c2" }}>
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
+          <IconButton size="large" color="inherit" sx={{ mr: 2 }}>
             <HubIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
-          >
+          <Typography variant="h6" noWrap sx={{ flexGrow: 1 }}>
             CareerHub
           </Typography>
           <Search>
@@ -214,52 +178,33 @@ export default function Header() {
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
-            >
+          <Box
+            sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}
+          >
+            <IconButton size="large" color="inherit">
               <Badge color="error">
                 <HomeIcon />
               </Badge>
             </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
-            >
+            <IconButton size="large" color="inherit">
               <Badge badgeContent={4} color="error">
                 <PeopleIcon />
               </Badge>
             </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
-            >
+            <IconButton size="large" color="inherit">
               <Badge badgeContent={4} color="error">
                 <WorkIcon />
               </Badge>
             </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
+            <IconButton size="large" color="inherit">
               <Avatar
                 sx={{
                   bgcolor: deepOrange[500],
                   height: "2.1rem",
                   width: "2.1rem",
                 }}
-                alt="Travis Howard"
-                src={ImageLogo}
+                alt="User Avatar"
+                // src={ImageLogo}
               />
             </IconButton>
           </Box>
