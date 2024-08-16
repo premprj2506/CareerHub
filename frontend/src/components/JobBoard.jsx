@@ -1,43 +1,20 @@
 import React, { useState, useEffect } from "react";
-import {
-  Grid,
-  Container,
-  Typography,
-  Box,
-  Button,
-  createTheme,
-  ThemeProvider,
-} from "@mui/material";
+import { Grid, Container, Typography, Box, Button } from "@mui/material";
 import { styled } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import JobListing from "./JobListing";
 import JobDetails from "./JobDetails";
 
-// Define theme inside the component
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#1976d2", // Example primary color
-    },
-    secondary: {
-      main: "#dc004e", // Example secondary color
-    },
-    error: {
-      main: "#d32f2f", // Example error color
-    },
-  },
+// Styled components with direct color values
+const SectionHeader = styled(Typography)({
+  marginBottom: 16,
+  color: "#1976d2", // Primary color
+  fontWeight: 700,
 });
 
-// Styled components
-const SectionHeader = styled(Typography)(({ theme }) => ({
-  marginBottom: theme.spacing(4),
-  color: theme.palette.primary.main,
-  fontWeight: 700,
-}));
-
-const ErrorText = styled(Typography)(({ theme }) => ({
-  color: theme.palette.error.main,
-}));
+const ErrorText = styled(Typography)({
+  color: "#d32f2f", // Error color
+});
 
 const JobBoard = () => {
   const [jobs, setJobs] = useState([]);
@@ -74,28 +51,26 @@ const JobBoard = () => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container sx={{ marginTop: 4 }}>
-        {loading ? (
-          <SectionHeader variant="h4">Loading...</SectionHeader>
-        ) : error ? (
-          <ErrorText variant="h5">Error: {error}</ErrorText>
-        ) : !selectedJob ? (
-          <>
-            <SectionHeader variant="h4">Job Listings</SectionHeader>
-            <Grid container spacing={3}>
-              {jobs.map((job) => (
-                <Grid item xs={12} md={6} key={job._id}>
-                  <JobListing job={job} onViewDetails={handleViewDetails} />
-                </Grid>
-              ))}
-            </Grid>
-          </>
-        ) : (
-          <JobDetails job={selectedJob} onBack={handleBackToListings} />
-        )}
-      </Container>
-    </ThemeProvider>
+    <Container sx={{ marginTop: 4 }}>
+      {loading ? (
+        <SectionHeader variant="h4">Loading...</SectionHeader>
+      ) : error ? (
+        <ErrorText variant="h5">Error: {error}</ErrorText>
+      ) : !selectedJob ? (
+        <>
+          <SectionHeader variant="h4">Job Listings</SectionHeader>
+          <Grid container spacing={3}>
+            {jobs.map((job) => (
+              <Grid item xs={12} md={6} key={job._id}>
+                <JobListing job={job} onViewDetails={handleViewDetails} />
+              </Grid>
+            ))}
+          </Grid>
+        </>
+      ) : (
+        <JobDetails job={selectedJob} onBack={handleBackToListings} />
+      )}
+    </Container>
   );
 };
 

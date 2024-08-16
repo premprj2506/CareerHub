@@ -1,16 +1,14 @@
 import { useState } from "react";
 import { Container, Box, TextField, Button, Typography } from "@mui/material";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,7 +23,7 @@ const Login = () => {
       });
       setSuccess("Logged in successfully!");
       setError("");
-      // Handle success logic (e.g., redirect, save token)
+      navigate("/feed"); // Redirect to /feed after successful login
     } catch (err) {
       setError(err.response?.data?.message || "An error occurred");
       setSuccess("");

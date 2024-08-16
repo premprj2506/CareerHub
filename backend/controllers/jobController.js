@@ -1,23 +1,16 @@
 const JobListing = require("../models/JobListing"); // Adjust path if needed
+const wrapAsync = require("../utils/wrapAsync.js");
 
-exports.showAllJobs = async (req, res) => {
-  try {
-    const jobs = await JobListing.find();
-    res.json(jobs);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
+exports.showAllJobs = wrapAsync(async (req, res) => {
+  const jobs = await JobListing.find();
+  res.json(jobs);
+});
 
-exports.showOne = async (req, res) => {
-  try {
-    const jobId = req.params.jobId;
-    const job = await JobListing.findById(jobId);
-    if (!job) {
-      return res.status(404).json({ message: "Job not found" });
-    }
-    res.json(job);
-  } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
+exports.showOne = wrapAsync(async (req, res) => {
+  const jobId = req.params.jobId;
+  const job = await JobListing.findById(jobId);
+  if (!job) {
+    return res.status(404).json({ message: "Job not found" });
   }
-};
+  res.json(job);
+});

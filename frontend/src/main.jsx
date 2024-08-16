@@ -8,15 +8,24 @@ import Header from "./components/Header";
 import JobBoard from "./components/JobBoard";
 import HeroSection from "./components/HeroSection";
 import JobDetails from "./components/JobDetails";
+import SessionComponent from "./components/SessionComponent";
 
 const router = createBrowserRouter([
   {
     path: "/login",
-    element: <Login />,
+    element: (
+      <>
+        <Login />
+      </>
+    ),
   },
   {
     path: "/signup",
-    element: <SignUpForm />,
+    element: (
+      <>
+        <SignUpForm />
+      </>
+    ),
   },
   {
     path: "/feed",
@@ -37,8 +46,17 @@ const router = createBrowserRouter([
       </>
     ),
   },
+  {
+    path: "/session",
+    element: (
+      <>
+        <SessionComponent />
+      </>
+    ),
+  },
 ]);
 
+// Render the application and set up routing
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <RouterProvider router={router} />

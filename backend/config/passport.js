@@ -10,7 +10,25 @@ passport.use(
       usernameField: "email",
       passwordField: "password",
     },
-    User.authenticate()
+    async (email, password, done) => {
+      try {
+        // Find the user by email
+        const user = await User.findOne({ email: email });
+        if (!user) {
+          return done(null, false, { message: "Incorrect email." });
+        }
+
+        // If the user is found, check the password
+        const isMatch = await user.authenticate(password);
+        if (!isMatch) {
+          return done(null, false, { message: "Incorrect password." });
+        }
+
+        return done(null, user);
+      } catch (err) {
+        return done(err);
+      }
+    }
   )
 ); // Using the authenticate method from the User model to handle authentication
 
