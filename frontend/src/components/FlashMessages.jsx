@@ -1,33 +1,34 @@
-import React, { useEffect, useState } from "react";
-import "./FlashMessages.css";
+import { useState, useEffect } from "react";
 
-const FlashMessages = () => {
-  const [messages, setMessages] = useState({
-    successMessages: [],
-    errorMessages: [],
-  });
+function FlashMessages() {
+  const [messages, setMessages] = useState({ success: "", error: "" });
 
   useEffect(() => {
-    fetch("/api/messages")
-      .then((response) => response.json())
-      .then((data) => setMessages(data))
-      .catch((error) => console.error("Error fetching messages:", error));
+    const fetchMessages = async () => {
+      try {
+        const response = await fetch("/api/get-messages");
+        const data = await response.json();
+        console.log("Fetched data:", data);
+        setMessages({
+          success: data.success_msg,
+          error: data.error_msg,
+        });
+      } catch (error) {
+        console.error("Error fetching flash messages:", error);
+      }
+    };
+
+    fetchMessages();
   }, []);
 
   return (
     <div>
-      {messages.successMessages.map((msg, index) => (
-        <div key={index} className="flash-message success">
-          {msg}
-        </div>
-      ))}
-      {messages.errorMessages.map((msg, index) => (
-        <div key={index} className="flash-message error">
-          {msg}
-        </div>
-      ))}
+      {messages.success && (
+        <div className="flash-success">{messages.success}</div>
+      )}
+      {messages.error && <div className="flash-error">{messages.error}</div>}
     </div>
   );
-};
+}
 
 export default FlashMessages;

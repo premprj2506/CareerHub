@@ -38,11 +38,16 @@ const SignUpForm = () => {
     try {
       // Send a POST request to the signup endpoint with formData
       const response = await axios.post("/api/users/signup", formData);
-      console.log(response);
-      // Set success message on successful registration
-      setSuccess("User registered successfully!");
-      // Clear error message
-      setError("");
+      if (response.status === 201) {
+        const data = response.data; // Get the user data from the response
+        localStorage.setItem("user", JSON.stringify(data.user)); // Store user info in localStorage
+        setSuccess("User registered and logged in successfully!");
+        setError("");
+        navigate("/feed"); // Redirect to feed
+      } else {
+        setError("Signup failed. Please try again.");
+        setSuccess("");
+      }
     } catch (err) {
       // Set error message if registration fails
       setError(err.response.data.message || "An error occurred");

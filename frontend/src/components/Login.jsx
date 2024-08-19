@@ -5,10 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 
 const Login = () => {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -18,14 +18,23 @@ const Login = () => {
     event.preventDefault();
     try {
       const response = await axios.post("/api/users/login", {
-        email: formData.email,
+        username: formData.username, // Updated to use username
         password: formData.password,
       });
-      setSuccess("Logged in successfully!");
-      setError("");
-      navigate("/feed"); // Redirect to /feed after successful login
+
+      if (response.status === 200) {
+        const data = response.data; // Directly access the parsed data
+        localStorage.setItem("user", JSON.stringify(data.user)); // Store user info in localStorage
+        setSuccess("Logged in successfully!");
+        setError("");
+        navigate("/feed");
+      } else {
+        setError("Login failed. Please check your credentials.");
+        setSuccess("");
+      }
     } catch (err) {
-      setError(err.response?.data?.message || "An error occurred");
+      console.error("Login error:", err);
+      setError("Something went wrong. Please try again.");
       setSuccess("");
     }
   };
@@ -48,12 +57,12 @@ const Login = () => {
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="username"
+            label="Username"
+            name="username" // Updated to use username
+            autoComplete="username"
             autoFocus
-            value={formData.email}
+            value={formData.username}
             onChange={handleChange}
           />
           <TextField

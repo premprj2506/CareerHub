@@ -1,7 +1,6 @@
 const User = require("../models/User");
-const passport = require("passport");
 
-exports.signup = async (req, res) => {
+exports.signup = async (req, res, next) => {
   const { username, password, email, role } = req.body;
 
   if (!username || !password || !email || !role) {
@@ -22,11 +21,13 @@ exports.signup = async (req, res) => {
     });
 
     let registeredUser = await User.register(newUser, password);
+
+    // Log in the user after registration
     req.login(registeredUser, (error) => {
       if (error) {
         return next(error);
       }
-      res.status(201).json(newUser);
+      res.status(201).json({ user: registeredUser });
     });
   } catch (err) {
     console.error(err);
@@ -34,25 +35,16 @@ exports.signup = async (req, res) => {
   }
 };
 
-exports.login = (req, res, next) => {
-  passport.authenticate("local", (err, user, info) => {
-    if (err) {
-      console.error("Authentication error:", err);
-      return next(err);
-    }
-    if (!user) {
-      console.warn("Authentication failed:", info.message);
-      return res.status(400).json({ message: info.message });
-    }
-    req.logIn(user, (err) => {
-      if (err) {
-        console.error("Login error:", err);
-        return next(err);
-      }
-      console.log("User logged in successfully:", user);
-      return res.status(200).json(user);
+exports.login = async (req, res) => {
+  try {
+    const user = req.user; // This is set by Passport after successful authentication
+    res.status(200).json({
+      message: "Login successful",
+      user: user,
     });
-  })(req, res, next);
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 };
 
 exports.logout = (req, res) => {
