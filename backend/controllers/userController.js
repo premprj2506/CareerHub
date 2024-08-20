@@ -14,9 +14,13 @@ exports.signup = async (req, res, next) => {
       role,
       profile: {
         name: username,
-        bio: "",
-        contact: "",
-        resume: "",
+        photo: {
+          url: "https://example.com/photos/carol.jpg",
+          filename: "carol.jpg",
+        },
+        bio: "HR Manager at InnovateX Inc.",
+        contact: "234-567-8901",
+        resume: "https://example.com/resumes/david_lee_resume.pdf",
       },
     });
 

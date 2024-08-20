@@ -223,7 +223,7 @@ export default function Header() {
   return (
     <Box sx={{ flexGrow: 1, position: "relative", zIndex: 1200 }}>
       <AppBar position="fixed" sx={{ backgroundColor: "#0a66h2" }}>
-        <Toolbar sx={{ justifyContent: "center" }}>
+        <Toolbar sx={{ justifyContent: "center", alignItems: "center" }}>
           <IconButton
             size="large"
             edge="start"
@@ -298,7 +298,9 @@ export default function Header() {
             >
               {user ? (
                 <div>
-                  <Avatar sx={{ width: "2rem", height: "2rem" }}>
+                  <Avatar
+                    sx={{ width: "2rem", height: "2rem", marginBottom: "2px" }}
+                  >
                     {user.username[0].toUpperCase()}
                   </Avatar>
                 </div>

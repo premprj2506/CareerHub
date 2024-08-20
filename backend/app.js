@@ -28,14 +28,17 @@ async function main() {
   await mongoose.connect(MONGO_URL);
 }
 
+// Middleware for parsing JSON requests
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 // Express session configuration for handling user sessions
 app.use(
   session({
-    secret: "fhdfebhjvcisvcihber", // Secret key for session (should be stored in an environment variable for security)
-    resave: false, // Prevent session from being saved back to the store if it wasn't modified
-    saveUninitialized: true, // Don't create a session until something is stored
+    secret: process.env.SESSION_SECRET || "fhdfebhjvcisvcihber", // Store in env variable
+    resave: false,
+    saveUninitialized: false, // Usually better to avoid storing empty sessions
     cookie: {
-      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
       maxAge: 7 * 24 * 60 * 60 * 1000,
       httpOnly: true,
     },
@@ -50,10 +53,6 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser()); // serializeUser determines which data of the user object should be stored in the session
 // Deserializing the user from the session
 passport.deserializeUser(User.deserializeUser()); // deserializeUser is used to fetch the user details from the session
-
-// Middleware for parsing JSON requests
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 
 // Default route to check if the server is running
 app.get("/", (req, res) => {

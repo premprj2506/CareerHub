@@ -9,6 +9,7 @@ import JobBoard from "./components/JobBoard";
 import HeroSection from "./components/HeroSection";
 import JobDetails from "./components/JobDetails";
 import SessionComponent from "./components/SessionComponent";
+import MyAccount from "./components/MyAccount";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,14 @@ const router = createBrowserRouter([
     element: (
       <>
         <SessionComponent />
+      </>
+    ),
+  },
+  {
+    path: "/myAccount",
+    element: (
+      <>
+        <MyAccount />
       </>
     ),
   },
