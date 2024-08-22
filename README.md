@@ -38,8 +38,8 @@ This project aims to develop a Job Listing Portal using the MERN stack (MongoDB,
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/job-listing-portal.git
-   cd job-listing-portal
+   git clone https://github.com/premprj2506/CareerHub.git
+   cd CareerHub
    ```
 
 2. **Install dependencies:**
@@ -55,17 +55,8 @@ This project aims to develop a Job Listing Portal using the MERN stack (MongoDB,
      cd frontend
      npm install
      ```
-
-3. **Configure environment variables:**
-
-   Create a `.env` file in the backend directory and add your MongoDB URI, JWT secret, and other necessary configurations.
-
-   ```env
-   MONGO_URI=your_mongodb_uri
-   JWT_SECRET=your_jwt_secret
-   ```
-
-4. **Run the application:**
+     
+3. **Run the application:**
 
    - Frontend & Backend:
      ```bash
