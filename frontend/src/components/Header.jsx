@@ -66,7 +66,7 @@ export default function Header() {
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
-    console.log(storedUser);
+    // console.log(storedUser);
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
@@ -89,6 +89,14 @@ export default function Header() {
       }
     } catch (error) {
       console.error("Logout error:", error);
+    }
+  };
+
+  const handleMyAccount = () => {
+    try {
+      navigate("/myAccount");
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -133,11 +141,15 @@ export default function Header() {
       onClose={handleMenuClose}
     >
       {user ? (
-        <div>
-          <p>Welcome, {user.username}</p>
-          <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-          <MenuItem onClick={handleLogout}>Logout</MenuItem>
-        </div>
+        [
+          // Use an array instead of a fragment
+          <MenuItem key="my-account" onClick={handleMyAccount}>
+            My account
+          </MenuItem>,
+          <MenuItem key="logout" onClick={handleLogout}>
+            Logout
+          </MenuItem>,
+        ]
       ) : (
         <p>Please log in</p>
       )}
@@ -161,68 +173,59 @@ export default function Header() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton size="small" aria-label="show 4 new mails" color="inherit">
-          <Badge color="error">
-            <HomeIcon />
-          </Badge>
-        </IconButton>
-        <p>Home</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="small"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <PeopleIcon />
-          </Badge>
-        </IconButton>
-        <p>My Network</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="small"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <WorkIcon />
-          </Badge>
-        </IconButton>
-        <p>Jobs</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="small"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notification</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="small"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
+      {[
+        // Use an array instead of a fragment
+        <MenuItem key="home">
+          <IconButton size="small" aria-label="home" color="inherit">
+            <Badge color="error">
+              <HomeIcon />
+            </Badge>
+          </IconButton>
+          <p>Home</p>
+        </MenuItem>,
+        <MenuItem key="network">
+          <IconButton size="small" aria-label="my network" color="inherit">
+            <Badge badgeContent={17} color="error">
+              <PeopleIcon />
+            </Badge>
+          </IconButton>
+          <p>My Network</p>
+        </MenuItem>,
+        <MenuItem key="jobs">
+          <IconButton size="small" aria-label="jobs" color="inherit">
+            <Badge badgeContent={17} color="error">
+              <WorkIcon />
+            </Badge>
+          </IconButton>
+          <p>Jobs</p>
+        </MenuItem>,
+        <MenuItem key="notifications">
+          <IconButton size="small" aria-label="notifications" color="inherit">
+            <Badge badgeContent={17} color="error">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+          <p>Notifications</p>
+        </MenuItem>,
+        <MenuItem key="profile" onClick={handleProfileMenuOpen}>
+          <IconButton
+            size="small"
+            aria-label="account of current user"
+            aria-controls={menuId}
+            aria-haspopup="true"
+            color="inherit"
+          >
+            <AccountCircle />
+          </IconButton>
+          <p>Profile</p>
+        </MenuItem>,
+      ]}
     </Menu>
   );
 
   return (
     <Box sx={{ flexGrow: 1, position: "relative", zIndex: 1200 }}>
-      <AppBar position="fixed" sx={{ backgroundColor: "#0a66h2" }}>
+      <AppBar position="fixed" sx={{ backgroundColor: "#1976d2" }}>
         <Toolbar sx={{ justifyContent: "center", alignItems: "center" }}>
           <IconButton
             size="large"
@@ -255,6 +258,7 @@ export default function Header() {
               size="large"
               aria-label="show 4 new mails"
               color="inherit"
+              onClick={() => navigate("/feed")}
             >
               <Badge color="error">
                 <HomeIcon />
@@ -273,6 +277,7 @@ export default function Header() {
               size="large"
               aria-label="show 4 new mails"
               color="inherit"
+              onClick={() => navigate("/jobs")}
             >
               <Badge badgeContent={4} color="error">
                 <WorkIcon />

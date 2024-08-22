@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography, Button, Container, Stack } from "@mui/material";
 import { styled } from "@mui/system";
+import { Link, useNavigate } from "react-router-dom";
 
 const HeroContainer = styled(Box)({
   backgroundImage:
@@ -35,6 +36,8 @@ const Overlay = styled(Box)({
 });
 
 const HeroSection = () => {
+  const navigate = useNavigate();
+
   return (
     <HeroContainer>
       <Overlay />
@@ -83,6 +86,7 @@ const HeroSection = () => {
                 width: "100%",
               },
             }}
+            onClick={() => navigate("/signup")}
           >
             Get Started
           </Button>

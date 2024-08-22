@@ -10,10 +10,12 @@ const SectionHeader = styled(Typography)({
   marginBottom: 16,
   color: "#1976d2", // Primary color
   fontWeight: 700,
+  textAlign: "center", // Centered text for header
 });
 
 const ErrorText = styled(Typography)({
   color: "#d32f2f", // Error color
+  textAlign: "center", // Centered text for error
 });
 
 const JobBoard = () => {
@@ -43,11 +45,11 @@ const JobBoard = () => {
   }, []);
 
   const handleViewDetails = (job) => {
-    navigate(`/jobs/show/${job._id}`); // Redirect to job details page
+    setSelectedJob(job); // Set the selected job to display details
   };
 
   const handleBackToListings = () => {
-    navigate("/"); // Redirect back to job listings
+    setSelectedJob(null); // Clear selected job to return to listings
   };
 
   return (
@@ -68,7 +70,17 @@ const JobBoard = () => {
           </Grid>
         </>
       ) : (
-        <JobDetails job={selectedJob} onBack={handleBackToListings} />
+        <Box sx={{ textAlign: "center" }}>
+          <JobDetails job={selectedJob} />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleBackToListings}
+            sx={{ mt: 4 }}
+          >
+            Back to Listings
+          </Button>
+        </Box>
       )}
     </Container>
   );

@@ -10,6 +10,7 @@ import HeroSection from "./components/HeroSection";
 import JobDetails from "./components/JobDetails";
 import SessionComponent from "./components/SessionComponent";
 import MyAccount from "./components/MyAccount";
+import CreateJobListing from "./components/CreateJobListing";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,18 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: "/jobs",
+    element: (
+      <>
+        <Header />
+        <br />
+        <br />
+        <br />
+        <JobBoard />
+      </>
+    ),
+  },
+  {
     path: "/jobs/:jobId",
     element: (
       <>
@@ -59,7 +72,17 @@ const router = createBrowserRouter([
     path: "/myAccount",
     element: (
       <>
+        <Header />
         <MyAccount />
+      </>
+    ),
+  },
+  {
+    path: "/addJob",
+    element: (
+      <>
+        <Header />
+        <CreateJobListing />
       </>
     ),
   },

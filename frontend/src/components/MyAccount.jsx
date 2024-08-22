@@ -10,12 +10,13 @@ import {
 } from "@mui/material";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
 const MyAccount = () => {
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch user data from localStorage or API
     const fetchUser = async () => {
       try {
         const response = await axios.get("/api/users/current_user", {
@@ -24,7 +25,6 @@ const MyAccount = () => {
         setUser(response.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
-        // Handle error - possibly redirect to login page or show an error message
       }
     };
 
@@ -36,21 +36,71 @@ const MyAccount = () => {
   }
 
   return (
-    <Box p={3}>
-      <Card>
-        <CardContent>
-          <Grid container spacing={3} alignItems="center">
+    <Box
+      p={3}
+      sx={{
+        backgroundColor: "#f5f5f5",
+        minHeight: "93vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Card
+        sx={{
+          maxWidth: 600,
+          width: "100%",
+          boxShadow: 5,
+          borderRadius: 2,
+          overflow: "hidden",
+          backgroundColor: "#ffffff",
+        }}
+      >
+        <Box
+          sx={{
+            backgroundColor: "#1976d2",
+            color: "#ffffff",
+            padding: 2,
+            textAlign: "center",
+          }}
+        >
+          <Typography variant="h4">My Profile</Typography>
+        </Box>
+        <CardContent sx={{ padding: 3 }}>
+          <Grid container spacing={2} direction="column" alignItems="center">
             <Grid item>
               <Avatar
                 src={user.profile.photo.url}
-                sx={{ width: 100, height: 100 }}
+                sx={{
+                  width: 120,
+                  height: 120,
+                  marginBottom: 2,
+                  border: "4px solid #1976d2",
+                }}
               />
             </Grid>
-            <Grid item xs={12} sm>
-              <Typography variant="h5">{user.profile.name}</Typography>
-              <Typography variant="subtitle1">{user.email}</Typography>
-              <Typography variant="body2">{user.profile.bio}</Typography>
-              <Typography variant="body2">{user.profile.contact}</Typography>
+            <Grid item xs={12}>
+              <Typography variant="h5" align="center" gutterBottom>
+                {user.profile.name}
+              </Typography>
+              <Typography
+                variant="subtitle1"
+                align="center"
+                color="textSecondary"
+              >
+                {user.email}
+              </Typography>
+              <Typography variant="body1" align="center" paragraph>
+                {user.profile.bio}
+              </Typography>
+              <Typography
+                variant="body2"
+                align="center"
+                color="textSecondary"
+                gutterBottom
+              >
+                Contact: {user.profile.contact}
+              </Typography>
               {user.profile.resume && (
                 <Button
                   variant="contained"
@@ -58,10 +108,36 @@ const MyAccount = () => {
                   href={user.profile.resume}
                   target="_blank"
                   rel="noopener noreferrer"
+                  sx={{
+                    display: "block",
+                    margin: "0 auto",
+                    marginTop: 2,
+                    backgroundColor: "#1976d2",
+                    textAlign: "center",
+                  }}
                 >
                   View Resume
                 </Button>
               )}
+              {user.role === "employer" ? (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  sx={{
+                    display: "block",
+                    margin: "0 auto",
+                    width: "100%",
+                    marginTop: 2,
+                    backgroundColor: "#1976d2",
+                    textAlign: "center",
+                  }}
+                  onClick={() => navigate("/addJob")}
+                >
+                  Add New JobListing
+                </Button>
+              ) : null}
             </Grid>
           </Grid>
         </CardContent>
