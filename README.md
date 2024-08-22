@@ -17,28 +17,21 @@ This project aims to develop a Job Listing Portal using the MERN stack (MongoDB,
 - **Profiles for job seekers and employers.**
 - Option to **upload resumes**, manage job listings, and track applications.
 
-### 4. Real-time Notifications
-- **Real-time updates** on application status and job listing changes.
-
-### 5. Secure Authentication
+### 4. Secure Authentication
 - **User authentication and authorization** using JWT or OAuth.
 - **Secure user data** and session management.
 
-### 6. Dashboards
-- **Personalized dashboards** for job seekers and employers.
-- Manage applications, job postings, and profiles.
-
-### 7. Responsive Design
+### 5. Responsive Design
 - **Mobile-friendly design** to ensure a seamless user experience across devices.
 
-### 8. Real-time Updates
+### 6. Real-time Updates
 - **Real-time notifications and updates** using WebSocket or Socket.IO.
 
 ## Technology Stack
 - **Frontend:** React.js
 - **Backend:** Node.js, Express.js
 - **Database:** MongoDB
-- **Authentication:** JWT/OAuth
+- **Authentication:** Passport
 - **Real-time:** WebSocket/Socket.IO
 
 ## Installation
@@ -74,20 +67,10 @@ This project aims to develop a Job Listing Portal using the MERN stack (MongoDB,
 
 4. **Run the application:**
 
-   - Backend:
+   - Frontend & Backend:
      ```bash
-     cd backend
      npm start
      ```
-
-   - Frontend:
-     ```bash
-     cd frontend
-     npm start
-     ```
-
-5. **Open your browser:**
-   Visit `http://localhost:3000` to view the application.
 
 ## Contributing
 Contributions are welcome! Please open an issue or submit a pull request for any improvements or features.
